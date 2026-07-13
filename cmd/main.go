@@ -1,32 +1,55 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"clip/internal"
 
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/widget"
 	"golang.design/x/clipboard"
 )
 
+var items []string
+
 func main() {
-	clipboard.Init()
+	a := app.New()
+	w := a.NewWindow("Clipboard")
+	w.Resize(fyne.NewSize(400, 200))
 
-	var last string
-	var lastOnes []string
+	list := widget.NewList(
+		func() int {
+			return len(items)
+		},
+		func() fyne.CanvasObject {
+			return widget.NewLabel("")
+		},
+		func(i widget.ListItemID, o fyne.CanvasObject) {
+			o.(*widget.Label).SetText(items[i])
+		},
+	)
 
-	for {
-		current := string(clipboard.Read(clipboard.FmtText))
+	list.OnSelected = func(id widget.ListItemID) {
+		item := items[id]
 
-		if current != last {
-			fmt.Println("Novo conteúdo:")
-			fmt.Println(current)
-
-			last = current
-			lastOnes = append(lastOnes, current)
-
-			fmt.Println("Lista:")
-			fmt.Println(lastOnes)
-		}
-
-		time.Sleep(500 * time.Millisecond)
+		clipboard.Write(
+			clipboard.FmtText,
+			[]byte(item),
+		)
 	}
+
+	w.SetContent(list)
+
+	clipboardChan := internal.InitClipboard()
+
+	go func() {
+		for item := range clipboardChan {
+			items = append(items, item)
+
+			fyne.Do(func() {
+				list.Refresh()
+			})
+		}
+	}()
+
+	w.ShowAndRun()
 }
