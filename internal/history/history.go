@@ -13,6 +13,13 @@ func New() *History {
 	return &History{}
 }
 
+// NewWith creates a history preloaded with items (e.g. from storage).
+func NewWith(items []string) *History {
+	copied := make([]string, len(items))
+	copy(copied, items)
+	return &History{items: copied}
+}
+
 // Add appends text if it is not already present. Returns true when added.
 func (h *History) Add(text string) bool {
 	if text == "" {

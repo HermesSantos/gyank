@@ -1,6 +1,10 @@
 package config
 
-import "time"
+import (
+	"os"
+	"path/filepath"
+	"time"
+)
 
 // Config holds application settings. Load expands this later (file/env);
 // for now Default is the single source of truth.
@@ -9,6 +13,7 @@ type Config struct {
 	PollInterval time.Duration
 	WindowWidth  float32
 	WindowHeight float32
+	DBPath       string
 }
 
 func Default() Config {
@@ -17,6 +22,7 @@ func Default() Config {
 		PollInterval: 500 * time.Millisecond,
 		WindowWidth:  400,
 		WindowHeight: 200,
+		DBPath:       defaultDBPath(),
 	}
 }
 
@@ -24,4 +30,12 @@ func Default() Config {
 // Persistence (file/env) can be added here without changing callers.
 func Load() Config {
 	return Default()
+}
+
+func defaultDBPath() string {
+	dir, err := os.UserConfigDir()
+	if err != nil {
+		return "gyank.db"
+	}
+	return filepath.Join(dir, "gyank", "history.db")
 }
