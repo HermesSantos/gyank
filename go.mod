@@ -5,6 +5,7 @@ go 1.26.4
 require (
 	fyne.io/fyne/v2 v2.8.0
 	golang.design/x/clipboard v0.8.0
+	modernc.org/sqlite v1.53.0
 )
 
 require (
@@ -55,5 +56,4 @@ require (
 	modernc.org/libc v1.73.4 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.53.0 // indirect
 )
