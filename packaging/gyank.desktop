@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Gyank
+Comment=Clipboard manager with history
+Exec=gyank
+Icon=gyank
+Terminal=false
+Categories=Utility;
+StartupNotify=false
+StartupWMClass=gyank
