@@ -17,7 +17,7 @@ before:
 
 builds:
   - id: gyank
-    main: .cmd/app
+    main: ./cmd/app
     binary: gyank
     env:
       - CGO_ENABLED=1
