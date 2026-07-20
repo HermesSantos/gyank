@@ -28,16 +28,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-          gcc \
-          pkg-config \
-          libgl1-mesa-dev \
-          xorg-dev \
-          libx11-dev \
-          libxcursor-dev \
-          libxrandr-dev \
-          libxinerama-dev \
-          libxi-dev \
-          libxxf86vm-dev
+            gcc \
+            pkg-config \
+            xorg-dev \
+            libgl1-mesa-dev \
+            libxcursor-dev \
+            libxrandr-dev \
+            libxinerama-dev \
+            libxi-dev \
+            libxxf86vm-dev \
+            libwayland-dev \
+            libxkbcommon-dev \
+            wayland-protocols
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
