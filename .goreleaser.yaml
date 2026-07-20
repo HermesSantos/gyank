@@ -16,7 +16,9 @@ before:
     - go generate ./...
 
 builds:
-  - main: ./...
+  - id: gyank
+  - main: .cmd/app
+    binary: gyank
     env:
       - CGO_ENABLED=1
     goos:
@@ -52,3 +54,21 @@ release:
     ---
 
     Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
+nfpms:
+  - id: gyank
+    package_name: gyank
+
+    formats:
+      - deb
+      - rpm
+
+    maintainer: Hermes Santos
+    description: Clipboard manager for Linux
+    license: MIT
+
+    contents:
+      - src: packaging/gyank.desktop
+        dst: /usr/share/applications/gyank.desktop
+
+      - src: packaging/gyank.png
+        dst: /usr/share/icons/hicolor/256x256/apps/gyank.png
